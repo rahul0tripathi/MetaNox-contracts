@@ -1,5 +1,5 @@
 const config = {
-  powerUpCOntract: "0x4BfFF8a671c2d4277a950bC34d118527a2704548",
+  powerUpCOntract: "0x6BBC67b967cE3C124749Cc06428e9c7CfD6b4Ef6",
 };
 
 export default config;

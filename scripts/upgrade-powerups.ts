@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { ethers, upgrades } from "hardhat";
 // eslint-disable-next-line node/no-missing-import
-import config from "./constants";
-const proxyAddress = config.powerUpCOntract;
+const proxyAddress ="0xB950552A377f9d4F67F245671b19CD9130Dc798E";
 async function main() {
   const [signer] = await ethers.getSigners();
   console.log(signer.address);

@@ -14,7 +14,7 @@ async function main() {
   // await setGreetingTx.wait();
   console.log(await tokens.balanceOf(builder1.address, 0));
   console.log(await tokens.balanceOf(builder1.address, 1));
-  console.log("assets", await tokens.connect(builder1).getAssets(1));
+  console.log("assets", await tokens.connect(builder1).getAssets(7));
   console.log(
     "is builder Free",
     await tokens.connect(builder1).isBuilderFree()
@@ -23,7 +23,7 @@ async function main() {
     "currently building:",
     await tokens.connect(builder1).getCurrentlyBuildingAsset()
   );
-  const buildTxn = await tokens.connect(builder1).buildNewAsset(1, "10", "20");
+  const buildTxn = await tokens.connect(builder1).buildNewAsset(7, "14", "13");
   await buildTxn.wait();
   console.log(
     "currently building:",
@@ -33,7 +33,7 @@ async function main() {
     "is builder Free",
     await tokens.connect(builder1).isBuilderFree()
   );
-  console.log("assets", await tokens.connect(builder1).getAssets(1));
+  console.log("assets", await tokens.connect(builder1).getAssets(7));
   console.log("trying to build once again");
   try {
     const buildTxn2 = await tokens

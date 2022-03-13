@@ -21,31 +21,34 @@ contract NoxLands is ERC1155Upgradeable {
     uint256 public constant GOLD_BOX = 7;
     uint256 public constant GOLD_BOX_BUILD_TIME = 60;
     uint256[7] public Assets;
-    uint256[6] public BuildTime;
+    uint256[7] public BuildTime;
     mapping(address => uint256) public BuilderStatus;
     mapping(address => mapping(uint256 => string[])) public AssetList;
     mapping(address => mapping(uint256 => bool)) public IsBuilding;
 
     function initialize() public initializer {
         __ERC1155_init("testFunction-{id}");
-        _mint(msg.sender, NOX, 10**18, "");
+        _mint(msg.sender, NOX, 21000000 * 10**18, "");
         Assets = [CANNON, CAMP, BUILDER_HUT, BARRACK, GEM_BOX, TOWER, GOLD_BOX];
         BuildTime = [
             CANNON_BUILD_TIME,
             CAMP_BUILD_TIME,
             BUILDER_HUT_BUILD_TIME,
+            BARRACK_BUILD_TIME,
             GEM_BOX_BUILD_TIME,
             TOWER_BUILD_TIME,
             GOLD_BOX_BUILD_TIME
         ];
-        for (uint256 i = 1; i < Assets.length; i++) {
-            _mint(msg.sender, i, 600, "");
+        for (uint256 i = 0; i < Assets.length; i++) {
+            _mint(msg.sender, Assets[i], 600, "");
         }
     }
 
     function flushBuilders(address owner) internal builderFree {
         for (uint256 i = 0; i < Assets.length; i++) {
-            IsBuilding[owner][i] = false;
+            if (IsBuilding[owner][Assets[i]]) {
+                IsBuilding[owner][Assets[i]] = false;
+            }
         }
     }
 
@@ -68,10 +71,10 @@ contract NoxLands is ERC1155Upgradeable {
         string memory x,
         string memory y
     ) public builderFree {
-        require(asset < Assets.length, "invalid asset");
+        require(asset <= Assets.length + 1, "invalid asset");
         resizeAssets(msg.sender, asset);
         flushBuilders(msg.sender);
-        BuilderStatus[msg.sender] = block.timestamp + BuildTime[asset];
+        BuilderStatus[msg.sender] = block.timestamp + BuildTime[asset-1];
         AssetList[msg.sender][asset].push(string(abi.encodePacked(x, ":", y)));
         IsBuilding[msg.sender][asset] = true;
         console.log("started building till", BuilderStatus[msg.sender]);
