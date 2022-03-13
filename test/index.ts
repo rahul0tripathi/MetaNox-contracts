@@ -2,15 +2,14 @@ import { ethers } from "hardhat";
 
 describe("Lands", function () {
   it("Should return the new greeting once it's changed", async function () {
-    const [addr, transferTo] = await ethers.getSigners();
+    const [addr] = await ethers.getSigners();
+    const transferTo = new ethers.Wallet(process.env.OTHER_PK || "");
+    console.log(transferTo.address);
     const tokens = await ethers.getContractAt(
       "NoxLands",
-      "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44"
+      "0x4BfFF8a671c2d4277a950bC34d118527a2704548"
     );
 
-    // const ownerTxn = await tokens.connect(addr).mint();
-
-    // await setGreetingTx.wait();
     console.log(await tokens.balanceOf(addr.address, 0));
     console.log(await tokens.balanceOf(addr.address, 1));
     console.log(await tokens.balanceOf(addr.address, 2));

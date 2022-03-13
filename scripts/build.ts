@@ -1,12 +1,14 @@
 import { ethers } from "hardhat";
+// eslint-disable-next-line node/no-missing-import
+import config from "./constants";
 
 async function main() {
-  const signer = await ethers.getSigners();
-  const builder1 = signer[1];
-  const tokens = await ethers.getContractAt(
-    "NoxLands",
-    "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44"
+  // const signer = await ethers.getSigners();
+  const builder1 = new ethers.Wallet(
+    process.env.OTHER_PK || "",
+    ethers.provider
   );
+  const tokens = await ethers.getContractAt("NoxLands", config.powerUpCOntract);
   // const ownerTxn = await tokens.connect(addr).mint();
 
   // await setGreetingTx.wait();
